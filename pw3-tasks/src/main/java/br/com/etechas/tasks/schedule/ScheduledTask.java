@@ -19,41 +19,43 @@ public class ScheduledTask {
     private TaskRepository taskRepository;
 
     private static final String[] TASK_TITLES = {
-        "Revisar código",
-        "Atualizar documentação",
-        "Fazer backup do sistema",
-        "Verificar logs de erro",
-        "Executar testes automatizados",
-        "Monitorar performance",
-        "Limpar cache",
-        "Verificar segurança"
+            "Revisar código",
+            "Atualizar documentação",
+            "Fazer backup do sistema",
+            "Verificar logs de erro",
+            "Executar testes automatizados",
+            "Monitorar performance",
+            "Limpar cache",
+            "Verificar segurança",
+            "Cobrar filho Tadeu",
     };
 
     private static final String[] TASK_DESCRIPTIONS = {
-        "Revisar o código desenvolvido na última semana",
-        "Atualizar a documentação do projeto",
-        "Realizar backup automático do sistema",
-        "Verificar e analisar logs de erro",
-        "Executar bateria de testes automatizados",
-        "Monitorar performance e uso de recursos",
-        "Limpar cache para otimizar performance",
-        "Verificar questões de segurança"
+            "Revisar o código desenvolvido na última semana",
+            "Atualizar a documentação do projeto",
+            "Realizar backup automático do sistema",
+            "Verificar e analisar logs de erro",
+            "Executar bateria de testes automatizados",
+            "Monitorar performance e uso de recursos",
+            "Limpar cache para otimizar performance",
+            "Verificar questões de segurança",
+            "Dizer ao filho do Tadeu que arranje um emprego urgentemente"
     };
 
     private static final String[] RESPONSIBLES = {
-        "Sistema Automático",
-        "Administrador",
-        "Desenvolvedor",
-        "Analista de Qualidade",
-        "DevOps"
+            "Sistema Automático",
+            "Administrador",
+            "Desenvolvedor",
+            "Analista de Qualidade",
+            "DevOps"
     };
 
-    @Scheduled(fixedRate = 60000)
+    @Scheduled(fixedRate = 6000)
     public void createAutomaticTask() {
         Random random = new Random();
-        
+
         Task task = new Task();
-        
+
         // Seleciona aleatoriamente um título e descrição
         int index = random.nextInt(TASK_TITLES.length);
         task.setTitulo(TASK_TITLES[index]);
@@ -62,19 +64,19 @@ public class ScheduledTask {
 
         // Define data de vencimento para a partir de hoje
         task.setDataLimite(LocalDate.now().plusDays(1)
-                                       .plusDays(random.nextInt(10)));
-        
+                .plusDays(random.nextInt(10)));
+
         // Define status como PENDING
         task.setStatusEnum(StatusEnum.PENDING);
-        
+
         // Define um responsável aleatório
         task.setResponsavel(RESPONSIBLES[random.nextInt(RESPONSIBLES.length)]);
-        
+
         // Salva a tarefa no banco
         taskRepository.save(task);
-        
+
         System.out.println("Tarefa automática criada: " + task.getTitulo() +
-                          " - Responsável: " + task.getResponsavel() +
-                          " - Data: " + LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss")));
+                " - Responsável: " + task.getResponsavel() +
+                " - Data: " + LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss")));
     }
 } 

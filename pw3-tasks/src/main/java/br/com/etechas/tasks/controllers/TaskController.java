@@ -1,6 +1,7 @@
 package br.com.etechas.tasks.controllers;
 //Eduardo Queiroz e André Nogueira Pissuto
 
+import br.com.etechas.tasks.dto.CadastroTarefaDTO;
 import br.com.etechas.tasks.dto.TarefaResponseDTO;
 import br.com.etechas.tasks.entity.Task;
 import br.com.etechas.tasks.services.TaskService;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping("/Tasks")
 public class TaskController {
@@ -25,7 +27,7 @@ public class TaskController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Task> excluirTarefa(@PathVariable Long id){
+    public ResponseEntity<Void> excluirTarefa(@PathVariable Long id){
         if(service.excluirPorId(id) == true){
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
@@ -33,6 +35,15 @@ public class TaskController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 
+    }
+
+    @PostMapping("/Cadastro")
+    public ResponseEntity<CadastroTarefaDTO> cadastrarTarefa(CadastroTarefaDTO dto){
+        try{
+            return ResponseEntity.ok( service.cadastrarTarefa(dto));
+        }catch(RuntimeException e){
+            return ResponseEntity.badRequest().build();
+        }
     }
 
 }

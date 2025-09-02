@@ -1,5 +1,6 @@
 package br.com.etechas.tasks.services;
 //Eduardo Queiroz e André Nogueira Pissuto
+import br.com.etechas.tasks.dto.CadastroTarefaDTO;
 import br.com.etechas.tasks.dto.TarefaResponseDTO;
 import br.com.etechas.tasks.entity.Task;
 import br.com.etechas.tasks.enums.StatusEnum;
@@ -40,5 +41,11 @@ public class TaskService {
         else{
             return false;
         }
+    }
+
+    public CadastroTarefaDTO cadastrarTarefa(CadastroTarefaDTO dto){
+        Task tarefa = tarefaMapper.toEntity(dto);
+        Task saved = repository.save(tarefa);
+        return tarefaMapper.toDto(saved);
     }
 }
